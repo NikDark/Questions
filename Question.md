@@ -70,4 +70,66 @@ print(webpage)
 ```
 > Декоратор принимает функцию в качестве аргумента и возвращает функцию.  
 
-:white_check_mark: Q3  
+---
+:white_check_mark: Q3  __Что такое mutable и immutable типы данных?   
+Какие типы данных могут быть ключом в словаре?__
+
+_Mutable_   
+ Под изменяемыми понимают типы, объекты которых могут быть изменены на месте, как, например, список, который имеет модифицирующие его методы list.remove, list.append,...
+* list
+* dict
+* set
+* object
+
+_Immutable_   
+Напротив, у неизменяемых объектов отсутствует модифицирующие их методы. Например, в следующем примере будет создан новый объект:
+```python
+x = 1
+x += 1 # x - теперь ссылается на новый объект, 2.
+```
+* boolean
+* int
+* float
+* string
+* tuple
+* frozenset
+
+Если в функцию, которая изменяет аргумент, передать mutable параметр, то переменная которая выступала параметром будет изменена и вне функции
+```python
+#!/usr/bin/env python3
+def change_me( mylist):
+    """
+    This changes a passed object.
+    """
+    mylist += [1,2,3,4]
+    print("Inside the function: ", mylist) # [10,20,30,1,2,3,4]
+
+my_list= [10,20,30]
+change_me(my_list)
+print("Outside the function: ", mylist) # [10,20,30,1,2,3,4]
+```
+
+А если передадим immutable параметр, то переменная не будет изменена вне функции
+```python
+#!/usr/bin/env python3
+def try_change_me( mytuple):
+    """This does not change a passed object."""
+    mytuple += (1,2,3,4)
+    print("Inside the function: ", mytuple) # (10,20,30,1,2,3,4)
+    
+my_tuple= (10,20,30)
+try_change_me(my_tuple)
+print("Outside the function: ", my_tuple) # (10,20,30)
+```
+
+_Ключом_ для словаря могут быть только неизменяемы (immutable) типы данных, потому что словарь работает с hash() функцией, в которую можно передать только неизменяемые параметры
+
+---
+:white_large_square: Q4 __Хэш-функция__  
+:white_large_square: Q5 __Итераторы__  
+:white_large_square: Q6 __X-Path__  
+:white_large_square: Q7 __LEFT, RIGHT, INNER JOIN (SQL)__  
+:white_large_square: Q8 __bs4__  
+:white_large_square: Q9 __List comprehension__  
+:white_large_square: Q10 __ООП__
+:white_large_square: :question: Q11 __Django__  
