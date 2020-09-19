@@ -95,6 +95,23 @@ x += 1 # x - теперь ссылается на новый объект, 2.
 * tuple
 * frozenset
 
+:exclamation::exclamation::exclamation::exclamation::exclamation::exclamation:Если в две переменные типа Immutable записаны два одинаковых значения, то у них будет одинаковый адрес:exclamation::exclamation::exclamation::exclamation::exclamation::exclamation:
+```py
+a = 123
+b = 123
+str1 = 'Good'
+str2 = 'Good'
+list1 = [1,2,3]
+list2 = [1,2,3]
+
+>> id(a) == id(b)
+True
+>> id(str1) == id(str2)
+True
+>> id(list1) == id(list2)
+False
+```
+
 Если в функцию, которая изменяет аргумент, передать mutable параметр, то переменная которая выступала параметром будет изменена и вне функции
 ```python
 #!/usr/bin/env python3
@@ -235,6 +252,19 @@ Out: [2,3,1]
 Out: [2,4]
 ```
 
+### 2.Что напечатает?
+```py
+>>> var1 = True
+>>> var2 = False
+>>> var3 = False
+>>> if var1 or var2 and var3:
+...     print("True")
+... else:
+...     print("False")
+... 
+Out: True
+```
+Потому что приоритет сначала у `and`, а потом у `or`
 #### Объединение двух словарей в Python 3.5+
 ```py
 dic1 = {'a':1,'b':2}
@@ -256,6 +286,147 @@ funcs = [myfunc]
 print(funcs[0]) # Выведет типа <function at 0xmfa137123>
 print(funcs[0](2,3)) # Выведет 5
 ```
+___
+:white_check_mark:
+### Множественное наследование и миксины
+Python поддерживает __множественное__ наследование. Можно создать несколько классов и от них создать дочерний класс, который будет наследовать эти два класса.
+Например:
+```py
+class Auto:
+    def ride(self):
+        print("Riding on a ground")
+
+class Boat:
+    def swim(self):
+        print("Sailing in the ocean")
+
+class Amphibian(Auto, Boat):
+    pass
+ 
+a = Amphibian()
+a.ride()
+a.swim()
+
+Out: >> Riding on a ground
+Out: >> Sailing in the ocean
+```
+
+!!!ОБРАТИТЕ ВНИМАНИЕ!!!
+```py
+>>> a = Amphibian()
+>>> isinstance(a, Auto)
+True
+>>> isinstance(a, Boat)
+True
+>>> isinstance(a, Amphibian)
+True
+```
+
+#### Примеси (Миксины, Mixins)
+Представим что у нас есть класс автомобиль, в котором мы реализовали функцию воспроизведения музыки. У нас все получилось, отлично! Но музыку могут воспроизводить не только автомобили, но и телефоны, и плееры. Поэтому мы создадим отдельный класс, в котором будет реализован метод воспроизведения музыки и затем наследуемся от этого класса (этот класс в котором мы реализовали метод и называется миксином)
+```py
+class MusicPlayerMixin:
+    def play_music(self, song):
+        print("Now playing: {}".format(song))
+
+class Smartphone(MusicPlayerMixin):
+    pass
+ 
+ 
+class Radio(MusicPlayerMixin):
+    pass
+ 
+ 
+class Amphibian(Auto, Boat, MusicPlayerMixin):
+   pass
+```
+#### Diamond problem
+Допустим у нас есть класс А, который является родительским для двух классов B и C, а эти два класса являются родительскими для класса D. И у каждого родительского класса А,В и С реализован метод hi(). Вопрос, если мы создадим экземпляр класса D то какой метод hi() будет вызван?
+Ответ: у первого класса, которого мы написали в скобках
+Например:
+```py
+class A:
+    def hi(self):
+        print("A")
+
+class B(A):
+    def hi(self):
+        print("B")
+
+class C(A):
+    def hi(self):
+        print("C")
+
+class D(B,C):
+    pass
+
+d = D()
+
+d.hi()
+
+Out: >> "B"
+```
+___
+:white_check_mark:
+### Обработка исключений
+try\except
+```py
+try:
+    print('10'+10)
+    print(1/0)
+except (TypeError,ZeroDivisionError):
+    print("Неверный ввод")
+```
+Можно писать несколько исключений в одном except
+
+Обычно после всех конкретных исключений идет обощенный except без указания ошибки
+```py
+try:
+    print(1/0)
+except:
+    print("Исключение поймано")
+finally:
+    print("Хорошо")
+print("Пока")
+```
+Блок `finally` выполняется всегда. 
+
+Можно вызывать исключения самому с использованием `raise`
+```python
+a,b=int(input()),int(input())  # вводим 1 затем 0
+if b==0:
+    raise ZeroDivisionError
+```
+
+В данном случае будет выведена ошибка которая вызвана в блоке `try`
+```py
+try:
+    print('1'+1)
+except:
+    raise
+```
+
+Также можно указать аргумент к определенному исключению в raise. Делается это с помощью дополнительных деталей исключения.
+
+```py
+raise ValueError("Несоответствующее значение")
+```
+
+Наконец, рассмотрим процесс создания собственных исключений. Для этого создадим новый класс из класса Exception. Потом его можно будет вызывать как любой другой тип исключения.
+```py
+class MyError(Exception):
+    print("Это проблема")
+
+raise MyError("ошибка MyError")
+```
+```
+Traceback (most recent call last):
+  File “<pyshell#179>”, line 1, in <module>
+    raise MyError(“ошибка MyError”)
+MyError: ошибка MyError
+```
+
+
 ___
 :white_check_mark: Q7 
 ### List comprehension
