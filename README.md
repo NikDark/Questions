@@ -21,10 +21,10 @@ ____
 [18. Разница между range() и xrange()](#range)  
 [19. Методологии разработки](#methods)  
 [20. Git Flow](#git)  
-[21. Алгоритмы](#algorithms)
-[22. Pandas](#pandas)
-[23. Общие вопросы про Python](#python)
-[24. Модуль re](#re)
+[21. Алгоритмы](#algorithms)  
+[22. Pandas](#pandas)  
+[23. Общие вопросы про Python](#python)  
+[24. Модуль re](#re)  
 ___
 :white_check_mark: __Q1__
 ### Генераторы <a name="Генераторы"></a>
