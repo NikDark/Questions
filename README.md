@@ -25,6 +25,7 @@ ____
 [22. Pandas](#pandas)  
 [23. Общие вопросы про Python](#python)  
 [24. Модуль re](#re)  
+[25. Асинхронность Python](#async)
 ___
 :white_check_mark: __Q1__
 ### Генераторы <a name="Генераторы"></a>
@@ -953,3 +954,9 @@ a|b - соотв. a или b
 
 :arrow_up_small:[Вернуться к оглавлению](#content)
 ___
+
+:white_check_mark:
+### Асинхронность Python <a name="async"></a>
+
+
+:arrow_up_small:[Вернуться к оглавлению](#content)
